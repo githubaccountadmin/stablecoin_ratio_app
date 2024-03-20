@@ -1,4 +1,4 @@
-This site is a place holer for the MakerDAO Peg Stability Module Stablecoin Ratio Trading App
+This site is a placeholder for the MakerDAO Peg Stability Module Stablecoin Ratio Trading App
 
 It uses makerDAO's contracts to swap DAI on PulseChain for USDC, USDP, or GUSD at a 1:1 ratio or visa versa...
 
