@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stablecoin Ratio App</title>
+    <!-- Include CSS styles -->
+    <style>
+        /* CSS styles from the provided .css file */
+        .App {
+            text-align: center;
+        }
+
+        .App-logo {
+            height: 40vmin;
+            pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .App-logo {
+                animation: App-logo-spin infinite 20s linear;
+            }
+        }
+
+        .App-header {
+            background-color: #121212; /* Darker background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(10px + 2vmin);
+            color: white;
+        }
+
+        .App-link {
+            color: #61dafb;
+        }
+
+        @keyframes App-logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Dark Mode Theme */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .coin-data {
+            background-color: #424242;
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 150px; /* Adjust based on your needs */
+            text-align: center;
+        }
+
+        .coin-data h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .coin-data p {
+            margin: 5px 0;
+            font-size: 0.9rem; /* Smaller text */
+        }
+    </style>
+</head>
+<body>
+    <div class="App">
+        <header class="App-header">
+            <h1>Stablecoin Ratio App</h1>
+            <!-- WalletConnect component -->
+            <button id="connectWalletBtn">Connect Wallet</button>
+            <!-- WalletConnect component end -->
+            <!-- Dashboard section -->
+            <div class="dashboard">
+                <!-- Coin data will be displayed here -->
+            </div>
+            <!-- Dashboard section end -->
+            <!-- Swap section -->
+            <div>
+                <label for="swapDirection">Swap Direction:</label>
+                <select id="swapDirection">
+                    <option value="sell">Stablecoin to DAI</option>
+                    <option value="buy">DAI to Stablecoin</option>
+                </select>
+            </div>
+            <div>
+                <label for="selectedStablecoin">Choose Stablecoin:</label>
+                <select id="selectedStablecoin">
+                    <option value="USDC">USDC</option>
+                    <option value="USDP">USDP</option>
+                    <option value="GUSD">GUSD</option>
+                </select>
+            </div>
+            <div>
+                <label for="amountToSwap">Amount:</label>
+                <input type="text" id="amountToSwap" />
+            </div>
+            <button id="swapBtn">Swap</button>
+            <!-- Swap section end -->
+        </header>
+    </div>
+
+    <!-- Include Web3 library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.6/web3.min.js"></script>
+    <!-- Include JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Connect Wallet handler
+            document.getElementById('connectWalletBtn').addEventListener('click', function () {
+                // Implement wallet connection logic here
+            });
+
+            // Swap handler
+            document.getElementById('swapBtn').addEventListener('click', function () {
+                // Implement swap logic here
+            });
+        });
+    </script>
+</body>
+</html>
