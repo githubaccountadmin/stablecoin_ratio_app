@@ -43,6 +43,9 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
 // Initialize Web3
 const web3 = new Web3();
 
+// Define global variable for PulseChain web3 instance
+let pulseChainWeb3;
+
 // Connect Wallet handler
 const connectWalletHandler = async () => {
   if (window.ethereum && window.ethereum.isMetaMask) {
@@ -62,7 +65,7 @@ const connectWalletHandler = async () => {
 
       // Check if the current network is PulseChain
       const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-      if (currentChainId !== pulseChainData.chainId) {
+      if (parseInt(currentChainId, 16) !== parseInt(pulseChainData.chainId, 16)) {
         // Request to switch to PulseChain network
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
@@ -77,7 +80,7 @@ const connectWalletHandler = async () => {
       // Initialize web3 with PulseChain RPC URL if on PulseChain
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       if (chainId === '0x171') {
-        const pulseChainWeb3 = new PWeb3('https://rpc-pulsechain.g4mm4.io');
+        pulseChainWeb3 = new PWeb3('https://rpc-pulsechain.g4mm4.io');
         console.log('web3 initialized with PulseChain RPC URL');
       }
     } catch (error) {
@@ -100,17 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Swap button click event
   document.getElementById('swapBtn').addEventListener('click', swapHandler);
-});
 
-// Render ConversionModule
-document.addEventListener('DOMContentLoaded', () => {
+  // Render ConversionModule
   const appHeader = document.querySelector('.App-header');
   const conversionModuleContainer = document.createElement('div');
   conversionModuleContainer.id = 'conversionModuleContainer';
   appHeader.appendChild(conversionModuleContainer);
 
   const renderConversionModule = () => {
-    ConversionModule(web3, account);
+    ReactDOM.render(ConversionModule(web3, account), conversionModuleContainer);
   };
 
   renderConversionModule();
