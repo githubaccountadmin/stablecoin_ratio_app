@@ -10,6 +10,10 @@ import vatABI from './vatABI.js';
 import ConversionModule from './ConversionModule'; // Import the ConversionModule component
 import { Buffer } from 'buffer';
 import ReactDOM from 'react-dom'; // Import ReactDOM for rendering without React components
+import Web3 from 'web3';
+
+// Create a new instance of Web3 with the given provider or a fallback URL
+const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 
 // Polyfill Buffer for browser environment
 window.Buffer = Buffer;
@@ -36,9 +40,6 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
   USDP: '0x7bbd8cA5e413bCa521C2c80D8d1908616894Cf21',
   GUSD: '0x79A0FA989fb7ADf1F8e80C93ee605Ebb94F7c6A5',
 };
-
-// Initialize Web3
-const web3 = new Web3();
 
 // Connect Wallet handler
 const connectWalletHandler = async () => {
