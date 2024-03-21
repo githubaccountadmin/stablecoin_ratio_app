@@ -57,7 +57,6 @@ const connectWalletHandler = async () => {
           decimals: 18
         },
         rpcUrls: ['https://rpc-pulsechain.g4mm4.io'],
-        blockExplorerUrls: ['https://explorer.pulsechain.com']
       };
 
       // Check if the current network is PulseChain
@@ -93,11 +92,15 @@ const swapHandler = () => {
   // Implement swap logic here
 };
 
-// Event listener for Connect Wallet button click event
-document.getElementById('connectWalletBtn').addEventListener('click', connectWalletHandler);
+document.addEventListener('DOMContentLoaded', function () {
+    // Connect Wallet button click event
+    document.getElementById('connectWalletBtn').addEventListener('click', connectWalletHandler);
 
-// Event listener for Swap button click event
-document.getElementById('swapBtn').addEventListener('click', swapHandler);
+    // Swap handler
+    document.getElementById('swapBtn').addEventListener('click', function () {
+        // Implement swap logic here
+    });
+});
 
 // Render ConversionModule
 document.addEventListener('DOMContentLoaded', () => {
