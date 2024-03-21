@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   appHeader.appendChild(conversionModuleContainer);
 
   const renderConversionModule = () => {
-    ConversionModule(web3, account);
+    conversionModuleContainer.innerHTML = ConversionModule(web3, account);
   };
 
   renderConversionModule();
