@@ -34,6 +34,8 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
   GUSD: '0x79A0FA989fb7ADf1F8e80C93ee605Ebb94F7c6A5',
 };
 
+let account; // Define the account variable globally
+
 // Connect Wallet handler
 const connectWalletHandler = async () => {
   console.log('Connect Wallet button clicked');
@@ -61,14 +63,15 @@ const connectWalletHandler = async () => {
         });
       }
 
-      // Continue with account connection
+       // Continue with account connection
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      console.log(`Connected account: ${accounts[0]}`);
+      account = accounts[0]; // Assign the connected account to the global variable
+      console.log(`Connected account: ${account}`);
 
       // Initialize web3 with PulseChain RPC URL if on PulseChain
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       if (chainId === '0x171') {
-        const pulseChainWeb3 = new PWeb3('https://rpc-pulsechain.g4mm4.io');
+        const pulseChainWeb3 = new PWeb3('https://rpc.pulsechain.com');
         console.log('web3 initialized with PulseChain RPC URL');
       }
     } catch (error) {
