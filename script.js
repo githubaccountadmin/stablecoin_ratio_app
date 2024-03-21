@@ -8,7 +8,6 @@ import psmUsdcABI from './psmUsdcABI.js';
 import psmUsdpABI from './psmUsdpABI.js';
 import psmGusdABI from './psmGusdABI.js';
 import vatABI from './vatABI.js';
-import PWeb3 from 'pweb3';
 import ConversionModule from './ConversionModule'; // Import the ConversionModule component
 import { Buffer } from 'buffer';
 import ReactDOM from 'react-dom'; // Import ReactDOM for rendering without React components
@@ -56,7 +55,7 @@ const connectWalletHandler = async () => {
           symbol: 'PLS',
           decimals: 18
         },
-        rpcUrls: ['https://rpc-pulsechain.g4mm4.io'],
+        rpcUrls: ['https://rpc.pulsechain.com'],
       };
 
       // Check if the current network is PulseChain
