@@ -1,4 +1,3 @@
-// Import necessary modules
 import usdcABI from './usdcABI.js';
 import usdpABI from './usdpABI.js';
 import gusdABI from './gusdABI.js';
