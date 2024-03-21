@@ -39,46 +39,46 @@ let account; // Define the account variable globally
 // Connect Wallet handler
 const connectWalletHandler = async () => {
   console.log('Connect Wallet button clicked');
-  if (window.ethereum && window.ethereum.isMetaMask) {
-    try {
-      // Define PulseChain network details
-      const pulseChainData = {
-        chainId: '0x171',
-        chainName: 'PulseChain',
-        nativeCurrency: {
-          name: 'PLS',
-          symbol: 'PLS',
-          decimals: 18
-        },
-        rpcUrls: ['https://rpc.pulsechain.com'],
-      };
-
-      // Check if the current network is PulseChain
-      const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-      if (currentChainId !== pulseChainData.chainId) {
-        // Request to switch to PulseChain network
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [pulseChainData]
-        });
-      }
-
-       // Continue with account connection
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      account = accounts[0]; // Assign the connected account to the global variable
-      console.log(`Connected account: ${account}`);
-
-      // Initialize web3 with PulseChain RPC URL if on PulseChain
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      if (chainId === '0x171') {
-        const pulseChainWeb3 = new Web3('https://rpc.pulsechain.com');
-        console.log('web3 initialized with PulseChain RPC URL');
-      }
-    } catch (error) {
-      console.error("Error connecting to MetaMask", error);
+  try {
+    if (!window.ethereum || !window.ethereum.isMetaMask) {
+      throw new Error('MetaMask not detected.');
     }
-  } else {
-    console.log('Please install MetaMask!');
+
+    // Define PulseChain network details
+    const pulseChainData = {
+      chainId: '0x171',
+      chainName: 'PulseChain',
+      nativeCurrency: {
+        name: 'PLS',
+        symbol: 'PLS',
+        decimals: 18
+      },
+      rpcUrls: ['https://rpc.pulsechain.com'],
+    };
+
+    // Check if the current network is PulseChain
+    const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+    if (currentChainId !== pulseChainData.chainId) {
+      // Request to switch to PulseChain network
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [pulseChainData]
+      });
+    }
+
+    // Continue with account connection
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    account = accounts[0]; // Assign the connected account to the global variable
+    console.log(`Connected account: ${account}`);
+
+    // Initialize web3 with PulseChain RPC URL if on PulseChain
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    if (chainId === '0x171') {
+      const pulseChainWeb3 = new Web3('https://rpc.pulsechain.com');
+      console.log('web3 initialized with PulseChain RPC URL');
+    }
+  } catch (error) {
+    console.error("Error connecting to MetaMask", error);
   }
 };
 
@@ -87,26 +87,47 @@ const swapHandler = () => {
   // Implement swap logic here
 };
 
+// Error handling for event listeners
 document.addEventListener('DOMContentLoaded', function () {
-    // Connect Wallet button click event
-    document.getElementById('connectWalletBtn').addEventListener('click', connectWalletHandler);
+  const connectWalletBtn = document.getElementById('connectWalletBtn');
+  if (connectWalletBtn) {
+    connectWalletBtn.addEventListener('click', connectWalletHandler);
+  } else {
+    console.error('Connect Wallet button not found.');
+  }
 
-    // Swap handler
-    document.getElementById('swapBtn').addEventListener('click', function () {
-        // Implement swap logic here
+  const swapBtn = document.getElementById('swapBtn');
+  if (swapBtn) {
+    swapBtn.addEventListener('click', () => {
+      // Implement swap logic here
     });
+  } else {
+    console.error('Swap button not found.');
+  }
 });
 
-// Render ConversionModule
+// Error handling for rendering ConversionModule
 document.addEventListener('DOMContentLoaded', () => {
   const appHeader = document.querySelector('.App-header');
+  if (!appHeader) {
+    console.error('App header not found.');
+    return;
+  }
+
   const conversionModuleContainer = document.createElement('div');
   conversionModuleContainer.id = 'conversionModuleContainer';
   appHeader.appendChild(conversionModuleContainer);
 
-  const renderConversionModule = () => {
-    conversionModuleContainer.innerHTML = ConversionModule(web3, account);
-  };
+  try {
+    const renderConversionModule = () => {
+      if (typeof ConversionModule !== 'function') {
+        throw new Error('ConversionModule is not a function.');
+      }
+      conversionModuleContainer.innerHTML = ConversionModule(web3, account);
+    };
 
-  renderConversionModule();
+    renderConversionModule();
+  } catch (error) {
+    console.error('Error rendering ConversionModule', error);
+  }
 });
