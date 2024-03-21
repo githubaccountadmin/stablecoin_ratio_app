@@ -4,10 +4,10 @@ const ConversionModule = ({ web3, account }) => {
     
     // Define contract addresses and ABIs
     const usdcContractAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
-    const usdcContractABI = [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"}, ...];
+    const usdcContractABI = [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"}, /* Add your ABI objects here */];
 
     const psmContractAddress = '0x89b78cfa322f6c5de0abceecab66aee45393cc5a';
-    const psmContractABI = [{"inputs":[{"internalType":"address","name":"gemJoin_","type":"address"},{"internalType":"address","name":"daiJoin_","type":"address"},{"internalType":"address","name":"vow_","type":"address"}],"stateMutability":"nonpayable","type":"constructor"}, ...];
+    const psmContractABI = [{"inputs":[{"internalType":"address","name":"gemJoin_","type":"address"},{"internalType":"address","name":"daiJoin_","type":"address"},{"internalType":"address","name":"vow_","type":"address"}],"stateMutability":"nonpayable","type":"constructor"}, /* Add your ABI objects here */];
 
     // Define functions for handling amount change and conversion
     const handleAmountChange = (event) => {
