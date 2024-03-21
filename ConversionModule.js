@@ -57,4 +57,4 @@ const ConversionModule = ({ web3, account }) => {
 };
 
 // Export the ConversionModule function
-module.exports = ConversionModule;
+export default ConversionModule;
