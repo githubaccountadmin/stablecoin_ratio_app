@@ -45,6 +45,7 @@ const web3 = new Web3();
 // WalletConnect component
 const WalletConnect = ({ onConnect, account }) => {
   const connectWalletHandler = async () => {
+    console.log('Connect Wallet button clicked'); // Add this line
     if (window.ethereum && window.ethereum.isMetaMask) {
       try {
         // Define PulseChain network details
