@@ -90,7 +90,7 @@ const WalletConnect = ({ onConnect, account }) => {
 
   return `
     <div>
-      <button id="connectWalletBtn" onclick="${connectWalletHandler}">
+      <button id="connectWalletBtn" onclick="(${connectWalletHandler})()">
         ${account ? 'Wallet Connected' : 'Connect Wallet'}
       </button>
       ${account ? `<p>Connected Account: ${account}</p>` : ''}
