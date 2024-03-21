@@ -71,7 +71,7 @@ const connectWalletHandler = async () => {
       // Initialize web3 with PulseChain RPC URL if on PulseChain
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       if (chainId === '0x171') {
-        const pulseChainWeb3 = new PWeb3('https://rpc.pulsechain.com');
+        const pulseChainWeb3 = new Web3('https://rpc.pulsechain.com');
         console.log('web3 initialized with PulseChain RPC URL');
       }
     } catch (error) {
