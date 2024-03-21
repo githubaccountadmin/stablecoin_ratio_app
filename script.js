@@ -83,9 +83,50 @@ const connectWalletHandler = async () => {
 };
 
 // Swap handler
-const swapHandler = () => {
-  // Implement swap logic here
+const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, account, web3) => {
+  try {
+    let tokenContractABI, tokenContractAddress, psmContractABI, psmContractAddress, approvalAddress;
+
+    // Determine contract ABIs and addresses based on swap direction and stablecoin
+    switch (swapDirection) {
+      case 'sell':
+        tokenContractABI = daiABI;
+        tokenContractAddress = CONTRACT_ADDRESSES.DAI;
+        psmContractABI = selectedStablecoin === 'USDC' ? psmUsdcABI : selectedStablecoin === 'USDP' ? psmUsdpABI : psmGusdABI;
+        psmContractAddress = PSM_CONTRACT_ADDRESSES[selectedStablecoin];
+        approvalAddress = JOIN_GEM_CONTRACT_ADDRESSES[selectedStablecoin];
+        break;
+      case 'buy':
+        tokenContractABI = CONTRACT_ADDRESSES[selectedStablecoin] === CONTRACT_ADDRESSES.USDC ? usdcABI : selectedStablecoin === 'USDP' ? usdpABI : gusdABI;
+        tokenContractAddress = CONTRACT_ADDRESSES[selectedStablecoin];
+        psmContractABI = PSM_CONTRACT_ADDRESSES[selectedStablecoin] === PSM_CONTRACT_ADDRESSES.USDC ? psmUsdcABI : selectedStablecoin === 'USDP' ? psmUsdpABI : psmGusdABI;
+        psmContractAddress = PSM_CONTRACT_ADDRESSES[selectedStablecoin];
+        approvalAddress = JOIN_GEM_CONTRACT_ADDRESSES[selectedStablecoin];
+        break;
+      default:
+        throw new Error("Invalid swap direction");
+    }
+
+    const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
+    const psmContract = new web3.eth.Contract(psmContractABI, psmContractAddress);
+    const amountInWei = web3.utils.toWei(amountToSwap, 'ether');
+
+    // Approve the PSM contract or JoinGem contract to spend tokens
+    await tokenContract.methods.approve(approvalAddress, amountInWei).send({ from: account });
+
+    // Execute swap
+    if (swapDirection === 'sell') {
+      await psmContract.methods.sellGem(account, amountInWei).send({ from: account });
+    } else {
+      await psmContract.methods.buyGem(account, amountInWei).send({ from: account });
+    }
+    console.log(`Swap completed: ${amountToSwap} ${swapDirection === 'sell' ? selectedStablecoin : 'DAI'} to ${swapDirection === 'sell' ? 'DAI' : selectedStablecoin}.`);
+  } catch (error) {
+    console.error('Error executing swap:', error);
+  }
 };
+
+export default swapHandler;
 
 // Error handling for event listeners
 document.addEventListener('DOMContentLoaded', function () {
@@ -96,12 +137,9 @@ document.addEventListener('DOMContentLoaded', function () {
     console.error('Connect Wallet button not found.');
   }
 
+  // Only define the event listener for the "Swap" button if it's not already defined
   const swapBtn = document.getElementById('swapBtn');
-  if (swapBtn) {
-    swapBtn.addEventListener('click', () => {
-      // Implement swap logic here
-    });
-  } else {
+  if (!swapBtn) {
     console.error('Swap button not found.');
   }
 });
