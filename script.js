@@ -42,76 +42,13 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
 // Initialize Web3
 const web3 = new Web3();
 
-// WalletConnect component
-const WalletConnect = ({ onConnect, account }) => {
-  const connectWalletHandler = async () => {
-    console.log('Connect Wallet button clicked'); // Add this line
-    if (window.ethereum && window.ethereum.isMetaMask) {
-      try {
-        // Define PulseChain network details
-        const pulseChainData = {
-          chainId: '0x171',
-          chainName: 'PulseChain',
-          nativeCurrency: {
-            name: 'PLS',
-            symbol: 'PLS',
-            decimals: 18
-          },
-          rpcUrls: ['https://rpc-pulsechain.g4mm4.io'],
-          blockExplorerUrls: ['https://explorer.pulsechain.com']
-        };
-
-        // Check if the current network is PulseChain
-        const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-        if (currentChainId !== pulseChainData.chainId) {
-          // Request to switch to PulseChain network
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [pulseChainData]
-          });
-        }
-
-        // Continue with account connection
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        console.log(`Connected account: ${accounts[0]}`);
-
-        // Initialize web3 with PulseChain RPC URL if on PulseChain
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        if (chainId === '0x171') {
-          const pulseChainWeb3 = new PWeb3('https://rpc-pulsechain.g4mm4.io');
-          console.log('web3 initialized with PulseChain RPC URL');
-        }
-      } catch (error) {
-        console.error("Error connecting to MetaMask", error);
-      }
-    } else {
-      console.log('Please install MetaMask!');
-    }
-  };
-
-  return `
-    <div>
-      <button id="connectWalletBtn" onclick="(${connectWalletHandler})()">
-        ${account ? 'Wallet Connected' : 'Connect Wallet'}
-      </button>
-      ${account ? `<p>Connected Account: ${account}</p>` : ''}
-    </div>
-  `;
-};
-
 // Swap handler
 const swapHandler = () => {
   // Implement swap logic here
 };
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  // Connect Wallet button click event
-  document.getElementById('connectWalletBtn').addEventListener('click', connectWalletHandler);
-
-  // Swap button click event
-  document.getElementById('swapBtn').addEventListener('click', swapHandler);
-});
+// Event listener for Swap button click event
+document.getElementById('swapBtn').addEventListener('click', swapHandler);
 
 // Render ConversionModule
 document.addEventListener('DOMContentLoaded', () => {
