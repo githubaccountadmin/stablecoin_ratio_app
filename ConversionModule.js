@@ -1,7 +1,3 @@
-// Import necessary libraries if needed
-// const Web3 = require('web3'); // Uncomment this line if you need to import Web3 library
-
-// Define ConversionModule function without React
 const ConversionModule = ({ web3, account }) => {
     // Define state variables using plain JavaScript
     let amount = '';
