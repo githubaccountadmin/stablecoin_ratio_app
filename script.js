@@ -8,7 +8,6 @@ import psmUsdpABI from './psmUsdpABI.js';
 import psmGusdABI from './psmGusdABI.js';
 import vatABI from './vatABI.js';
 import ConversionModule from './ConversionModule'; // Import the ConversionModule component
-import ReactDOM from 'react-dom'; // Import ReactDOM for rendering without React components
 import Web3 from 'web3';
 
 // Create a new instance of Web3 with the given provider or a fallback URL
