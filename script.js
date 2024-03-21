@@ -1,5 +1,4 @@
 // Import necessary modules
-import Web3 from 'web3';
 import usdcABI from './usdcABI.js';
 import usdpABI from './usdpABI.js';
 import gusdABI from './gusdABI.js';
