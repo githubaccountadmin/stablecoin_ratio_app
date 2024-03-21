@@ -6,7 +6,7 @@ import psmUsdcABI from './psmUsdcABI.js';
 import psmUsdpABI from './psmUsdpABI.js';
 import psmGusdABI from './psmGusdABI.js';
 import vatABI from './vatABI.js';
-import ConversionModule from './ConversionModule'; // Import the ConversionModule component
+import ConversionModule from './ConversionModule.js'; // Import the ConversionModule component
 
 // Create a new instance of Web3 with the given provider or a fallback URL
 const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
