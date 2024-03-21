@@ -47,14 +47,12 @@ const ConversionModule = ({ web3, account }) => {
         }
     };
 
-    // Return HTML for the user interface
-    return (
-        '<div>' +
-        '    <input type="number" onchange="handleAmountChange(event)" placeholder="Enter USDC amount" />' +
-        '    <button onclick="convertUSDCtoDAI()">Convert to DAI</button>' +
-        '</div>'
-    );
+    return `
+        <div>
+            <input type="number" onchange="handleAmountChange(event)" placeholder="Enter USDC amount" />
+            <button onclick="handleConvertUSDCtoDAI()">Convert to DAI</button>
+        </div>
+    `;
 };
 
-// Export the ConversionModule function
 export default ConversionModule;
