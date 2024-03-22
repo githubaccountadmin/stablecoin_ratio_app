@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-const handleUSDCApprove = async () => {
+const handleUSDCApprove = async (amount) => {
     // Initialize USDC contract instance
     const usdcContract = new web3.eth.Contract(usdcContractABI, usdcContractAddress);
     const amountInUSDCDecimals = `${amount * Math.pow(10, 6)}`;
@@ -147,8 +147,8 @@ const handleUSDCApprove = async () => {
 };
 
 // Define handleConvertUSDCtoDAI globally
-window.handleConvertUSDCtoDAI = async () => {
-    await handleUSDCApprove(); // Make sure USDC is approved before conversion
+window.handleConvertUSDCtoDAI = async (amount) => {
+    await handleUSDCApprove(amount); // Make sure USDC is approved before conversion
     if (web3 && account) {
         // Initialize PSM contract instance
         const contract = new web3.eth.Contract(psmContractABI, psmContractAddress);
@@ -211,10 +211,7 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
   }
 };
 
-const ConversionModule = ({ web3, account }) => {
-    // Define state variables using plain JavaScript
-    let amount = '';
-
+const ConversionModule = ({ web3, account, amount }) => {
     return `
         <div>
             <input type="number" onchange="handleAmountChange(event)" placeholder="Enter USDC amount" />
@@ -240,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof ConversionModule !== 'function') {
         throw new Error('ConversionModule is not a function.');
       }
-      conversionModuleContainer.innerHTML = ConversionModule(web3, account);
+      conversionModuleContainer.innerHTML = ConversionModule({web3, account, amount});
     };
 
     renderConversionModule();
