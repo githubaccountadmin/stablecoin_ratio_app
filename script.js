@@ -42,6 +42,12 @@ const handleAmountChange = (event) => {
     console.log('Selected amount:', amount);
 };
 
+// Define the handleDisconnect function
+const handleDisconnect = () => {
+    console.log('MetaMask disconnected');
+    // Perform any necessary actions when MetaMask is disconnected
+};
+
 // Connect Wallet handler
 const connectWalletHandler = async () => {
     console.log('Connect Wallet button clicked');
