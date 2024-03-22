@@ -215,8 +215,7 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
 const ConversionModule = ({ web3, account, amount }) => {
     return `
         <div>
-            <input type="number" onchange="handleAmountChange(event)" placeholder="Enter USDC amount" />
-            <button onclick="handleConvertUSDCtoDAI()">Convert to DAI</button>
+            <input type="number" onchange="handleAmountChange(event)" placeholder="Enter amount" />
         </div>
     `;
 };
