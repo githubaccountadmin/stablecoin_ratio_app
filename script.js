@@ -89,6 +89,40 @@ const connectWalletHandler = async () => {
     }
 };
 
+const handleUSDCApprove = async () => {
+    // Initialize USDC contract instance
+    const usdcContract = new web3.eth.Contract(usdcContractABI, usdcContractAddress);
+    const amountInUSDCDecimals = `${amount * Math.pow(10, 6)}`;
+    try {
+        // Send approval transaction
+        await usdcContract.methods.approve(psmContractAddress, amountInUSDCDecimals).send({ from: account });
+        console.log('USDC approval successful');
+    } catch (error) {
+        console.error('Error in USDC approval:', error);
+    }
+};
+
+// Define handleConvertUSDCtoDAI globally
+window.handleConvertUSDCtoDAI = async () => {
+    await handleUSDCApprove(); // Make sure USDC is approved before conversion
+    if (web3 && account) {
+        // Initialize PSM contract instance
+        const contract = new web3.eth.Contract(psmContractABI, psmContractAddress);
+        // Directly multiply the amount by 10**6 for USDC's 6 decimal places
+        const usdcAmountInWei = `${amount * Math.pow(10, 6)}`;
+    
+        try {
+            // Assuming sellGem is correct; replace with the actual function if different
+            await contract.methods.sellGem(account, usdcAmountInWei).send({ from: account });
+            console.log(`Conversion successful: ${amount} USDC to DAI`);
+        } catch (error) {
+            console.error('Error during conversion:', error);
+        }
+    } else {
+        console.log('Web3 or account not initialized');
+    }
+};
+
 // Error handling for event listeners
 document.addEventListener('DOMContentLoaded', function () {
     const connectWalletBtn = document.getElementById('connectWalletBtn');
@@ -179,40 +213,6 @@ const ConversionModule = ({ web3, account }) => {
         console.error('Amount input field not found.');
       }
     });
-
-    const handleUSDCApprove = async () => {
-        // Initialize USDC contract instance
-        const usdcContract = new web3.eth.Contract(usdcContractABI, usdcContractAddress);
-        const amountInUSDCDecimals = `${amount * Math.pow(10, 6)}`;
-        try {
-            // Send approval transaction
-            await usdcContract.methods.approve(psmContractAddress, amountInUSDCDecimals).send({ from: account });
-            console.log('USDC approval successful');
-        } catch (error) {
-            console.error('Error in USDC approval:', error);
-        }
-    };
-
-    // Define handleConvertUSDCtoDAI globally
-    window.handleConvertUSDCtoDAI = async () => {
-        await handleUSDCApprove(); // Make sure USDC is approved before conversion
-        if (web3 && account) {
-            // Initialize PSM contract instance
-            const contract = new web3.eth.Contract(psmContractABI, psmContractAddress);
-            // Directly multiply the amount by 10**6 for USDC's 6 decimal places
-            const usdcAmountInWei = `${amount * Math.pow(10, 6)}`;
-    
-            try {
-                // Assuming sellGem is correct; replace with the actual function if different
-                await contract.methods.sellGem(account, usdcAmountInWei).send({ from: account });
-                console.log(`Conversion successful: ${amount} USDC to DAI`);
-            } catch (error) {
-                console.error('Error during conversion:', error);
-            }
-        } else {
-            console.log('Web3 or account not initialized');
-        }
-    };
 
     return `
         <div>
