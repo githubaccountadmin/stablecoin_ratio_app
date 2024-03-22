@@ -113,6 +113,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Define the handleAmountChange function
+const handleAmountChange = (event) => {
+  // Retrieve the selected amount from the input field
+  const amount = event.target.value;
+  // Perform any necessary actions with the selected amount
+  console.log('Selected amount:', amount);
+};
+
 const handleUSDCApprove = async () => {
     // Initialize USDC contract instance
     const usdcContract = new web3.eth.Contract(usdcContractABI, usdcContractAddress);
@@ -194,14 +202,6 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
 const ConversionModule = ({ web3, account }) => {
     // Define state variables using plain JavaScript
     let amount = '';
-    
-    // Define the handleAmountChange function
-    const handleAmountChange = (event) => {
-      // Retrieve the selected amount from the input field
-      const amount = event.target.value;
-      // Perform any necessary actions with the selected amount
-      console.log('Selected amount:', amount);
-    };
     
     // Error handling for event listeners
     document.addEventListener('DOMContentLoaded', function () {
