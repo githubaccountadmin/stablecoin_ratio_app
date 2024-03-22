@@ -89,14 +89,30 @@ const connectWalletHandler = async () => {
             web3 = new Web3('https://rpc.pulsechain.com');
             console.log('web3 initialized with PulseChain RPC URL');
         }
-
-        // Update event listener to use 'disconnect' instead of 'close'
-        window.ethereum.on('disconnect', handleDisconnect);
       
     } catch (error) {
         console.error("Error connecting to MetaMask", error);
     }
 };
+
+// Update event listener to use 'disconnect' instead of 'close'
+window.ethereum.on('disconnect', handleDisconnect);
+
+// Error handling for event listeners
+document.addEventListener('DOMContentLoaded', function () {
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+    if (connectWalletBtn) {
+        connectWalletBtn.addEventListener('click', connectWalletHandler);
+    } else {
+        console.error('Connect Wallet button not found.');
+    }
+
+    // Only define the event listener for the "Swap" button if it's not already defined
+    const swapBtn = document.getElementById('swapBtn');
+    if (!swapBtn) {
+        console.error('Swap button not found.');
+    }
+});
 
 const handleUSDCApprove = async () => {
     // Initialize USDC contract instance
@@ -131,22 +147,6 @@ window.handleConvertUSDCtoDAI = async () => {
         console.log('Web3 or account not initialized');
     }
 };
-
-// Error handling for event listeners
-document.addEventListener('DOMContentLoaded', function () {
-    const connectWalletBtn = document.getElementById('connectWalletBtn');
-    if (connectWalletBtn) {
-        connectWalletBtn.addEventListener('click', connectWalletHandler);
-    } else {
-        console.error('Connect Wallet button not found.');
-    }
-
-    // Only define the event listener for the "Swap" button if it's not already defined
-    const swapBtn = document.getElementById('swapBtn');
-    if (!swapBtn) {
-        console.error('Swap button not found.');
-    }
-});
 
 // Swap handler
 const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, account, web3) => {
