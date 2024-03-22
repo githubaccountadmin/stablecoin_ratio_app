@@ -42,14 +42,15 @@ const ConversionModule = ({ web3, account }) => {
         }
     };
 
-    const handleConvertUSDCtoDAI = async () => {
+    // Define handleConvertUSDCtoDAI globally
+    window.handleConvertUSDCtoDAI = async () => {
         await handleUSDCApprove(); // Make sure USDC is approved before conversion
         if (web3 && account) {
             // Initialize PSM contract instance
             const contract = new web3.eth.Contract(psmContractABI, psmContractAddress);
             // Directly multiply the amount by 10**6 for USDC's 6 decimal places
             const usdcAmountInWei = `${amount * Math.pow(10, 6)}`;
-
+    
             try {
                 // Assuming sellGem is correct; replace with the actual function if different
                 await contract.methods.sellGem(account, usdcAmountInWei).send({ from: account });
