@@ -121,6 +121,18 @@ const handleAmountChange = (event) => {
   console.log('Selected amount:', amount);
 };
 
+// Error handling for event listeners
+document.addEventListener('DOMContentLoaded', function () {
+  // Find the amount input field by its ID
+  const amountInput = document.getElementById('amountInput');
+  if (amountInput) {
+    // Add an event listener for the 'change' event
+    amountInput.addEventListener('change', handleAmountChange);
+  } else {
+    console.error('Amount input field not found.');
+  }
+});
+
 const handleUSDCApprove = async () => {
     // Initialize USDC contract instance
     const usdcContract = new web3.eth.Contract(usdcContractABI, usdcContractAddress);
@@ -202,18 +214,6 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
 const ConversionModule = ({ web3, account }) => {
     // Define state variables using plain JavaScript
     let amount = '';
-    
-    // Error handling for event listeners
-    document.addEventListener('DOMContentLoaded', function () {
-      // Find the amount input field by its ID
-      const amountInput = document.getElementById('amountInput');
-      if (amountInput) {
-        // Add an event listener for the 'change' event
-        amountInput.addEventListener('change', handleAmountChange);
-      } else {
-        console.error('Amount input field not found.');
-      }
-    });
 
     return `
         <div>
