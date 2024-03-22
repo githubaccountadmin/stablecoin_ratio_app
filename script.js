@@ -35,51 +35,75 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
 
 let account; // Define the account variable globally
 
+// Define handleAmountChange function globally
+const handleAmountChange = (event) => {
+    // Retrieve the selected amount from the input field
+    const amount = event.target.value;
+    // Perform any necessary actions with the selected amount
+    console.log('Selected amount:', amount);
+};
+
 // Connect Wallet handler
 const connectWalletHandler = async () => {
-  console.log('Connect Wallet button clicked');
-  try {
-    if (!window.ethereum || !window.ethereum.isMetaMask) {
-      throw new Error('MetaMask not detected.');
+    console.log('Connect Wallet button clicked');
+    try {
+        if (!window.ethereum || !window.ethereum.isMetaMask) {
+            throw new Error('MetaMask not detected.');
+        }
+
+        // Define PulseChain network details
+        const pulseChainData = {
+            chainId: '0x171',
+            chainName: 'PulseChain',
+            nativeCurrency: {
+                name: 'PLS',
+                symbol: 'PLS',
+                decimals: 18
+            },
+            rpcUrls: ['https://rpc.pulsechain.com'],
+        };
+
+        // Check if the current network is PulseChain
+        const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+        if (currentChainId !== pulseChainData.chainId) {
+            // Request to switch to PulseChain network
+            await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [pulseChainData]
+            });
+        }
+
+        // Continue with account connection
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        account = accounts[0]; // Assign the connected account to the global variable
+        console.log(`Connected account: ${account}`);
+
+        // Initialize web3 with PulseChain RPC URL if on PulseChain
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        if (chainId === '0x171') {
+            web3 = new Web3('https://rpc.pulsechain.com');
+            console.log('web3 initialized with PulseChain RPC URL');
+        }
+    } catch (error) {
+        console.error("Error connecting to MetaMask", error);
     }
-
-    // Define PulseChain network details
-    const pulseChainData = {
-      chainId: '0x171',
-      chainName: 'PulseChain',
-      nativeCurrency: {
-        name: 'PLS',
-        symbol: 'PLS',
-        decimals: 18
-      },
-      rpcUrls: ['https://rpc.pulsechain.com'],
-    };
-
-    // Check if the current network is PulseChain
-    const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if (currentChainId !== pulseChainData.chainId) {
-      // Request to switch to PulseChain network
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [pulseChainData]
-      });
-    }
-
-    // Continue with account connection
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    account = accounts[0]; // Assign the connected account to the global variable
-    console.log(`Connected account: ${account}`);
-
-    // Initialize web3 with PulseChain RPC URL if on PulseChain
-    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if (chainId === '0x171') {
-      const pulseChainWeb3 = new Web3('https://rpc.pulsechain.com');
-      console.log('web3 initialized with PulseChain RPC URL');
-    }
-  } catch (error) {
-    console.error("Error connecting to MetaMask", error);
-  }
 };
+
+// Error handling for event listeners
+document.addEventListener('DOMContentLoaded', function () {
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+    if (connectWalletBtn) {
+        connectWalletBtn.addEventListener('click', connectWalletHandler);
+    } else {
+        console.error('Connect Wallet button not found.');
+    }
+
+    // Only define the event listener for the "Swap" button if it's not already defined
+    const swapBtn = document.getElementById('swapBtn');
+    if (!swapBtn) {
+        console.error('Swap button not found.');
+    }
+});
 
 // Swap handler
 const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, account, web3) => {
@@ -124,22 +148,6 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
     console.error('Error executing swap:', error);
   }
 };
-
-// Error handling for event listeners
-document.addEventListener('DOMContentLoaded', function () {
-  const connectWalletBtn = document.getElementById('connectWalletBtn');
-  if (connectWalletBtn) {
-    connectWalletBtn.addEventListener('click', connectWalletHandler);
-  } else {
-    console.error('Connect Wallet button not found.');
-  }
-
-  // Only define the event listener for the "Swap" button if it's not already defined
-  const swapBtn = document.getElementById('swapBtn');
-  if (!swapBtn) {
-    console.error('Swap button not found.');
-  }
-});
 
 const ConversionModule = ({ web3, account }) => {
     // Define state variables using plain JavaScript
