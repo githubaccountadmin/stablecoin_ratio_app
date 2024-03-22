@@ -8,7 +8,8 @@ import psmGusdABI from './psmGusdABI.js';
 import vatABI from './vatABI.js';
 
 // Create a new instance of Web3 with the given provider or a fallback URL
-const web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+let web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
+let account; // Define the account variable globally
 
 // Define contract addresses
 const CONTRACT_ADDRESSES = {
@@ -32,8 +33,6 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
   USDP: '0x7bbd8cA5e413bCa521C2c80D8d1908616894Cf21',
   GUSD: '0x79A0FA989fb7ADf1F8e80C93ee605Ebb94F7c6A5',
 };
-
-let account; // Define the account variable globally
 
 // Define handleAmountChange function globally
 const handleAmountChange = (event) => {
@@ -84,6 +83,10 @@ const connectWalletHandler = async () => {
             web3 = new Web3('https://rpc.pulsechain.com');
             console.log('web3 initialized with PulseChain RPC URL');
         }
+
+        // Update event listener to use 'disconnect' instead of 'close'
+        window.ethereum.on('disconnect', handleDisconnect);
+      
     } catch (error) {
         console.error("Error connecting to MetaMask", error);
     }
