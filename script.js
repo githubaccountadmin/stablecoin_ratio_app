@@ -10,6 +10,7 @@ import vatABI from './vatABI.js';
 // Create a new instance of Web3 with the given provider or a fallback URL
 let web3 = new Web3(Web3.givenProvider || 'https://rpc.pulsechain.com');
 let account; // Define the account variable globally
+const amount = '';
 
 // Define contract addresses and ABIs
 const usdcContractAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
@@ -237,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof ConversionModule !== 'function') {
         throw new Error('ConversionModule is not a function.');
       }
-      conversionModuleContainer.innerHTML = ConversionModule({web3, account, amount});
+      conversionModuleContainer.innerHTML = ConversionModule({ web3, account, amount }); // Pass the amount variable here
     };
 
     renderConversionModule();
