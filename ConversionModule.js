@@ -27,7 +27,7 @@ const ConversionModule = ({ web3, account }) => {
         }
     };
 
-    const convertUSDCtoDAI = async () => {
+    const handleConvertUSDCtoDAI = async () => {
         await handleUSDCApprove(); // Make sure USDC is approved before conversion
         if (web3 && account) {
             // Initialize PSM contract instance
