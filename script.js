@@ -205,36 +205,4 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
     console.error('Error executing swap:', error);
   }
 };
-
-const ConversionModule = ({ web3, account, amount }) => {
-    return `
-        <div>
-            <input type="number" onchange="handleAmountChange(event)" placeholder="Enter USDC amount" />
-        </div>
-    `;
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-  const appHeader = document.querySelector('.App-header');
-  if (!appHeader) {
-    console.error('App header not found.');
-    return;
-  }
-
-  const conversionModuleContainer = document.createElement('div');
-  conversionModuleContainer.id = 'conversionModuleContainer';
-  appHeader.appendChild(conversionModuleContainer);
-
-  try {
-    const renderConversionModule = () => {
-      if (typeof ConversionModule !== 'function') {
-        throw new Error('ConversionModule is not a function.');
-      }
-      conversionModuleContainer.innerHTML = ConversionModule({ web3, account, amount });
-    };
-
-    renderConversionModule();
-  } catch (error) {
-    console.error('Error rendering ConversionModule', error);
-  }
 });
