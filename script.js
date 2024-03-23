@@ -35,6 +35,15 @@ const handleDisconnect = () => {
     console.log('MetaMask disconnected');
 };
 
+const enableSwapButton = () => {
+    const swapBtn = document.getElementById('swapBtn');
+    if (swapBtn) {
+        swapBtn.disabled = false;
+    } else {
+        console.error('Swap button not found.');
+    }
+};
+
 const connectWalletHandler = async () => {
     console.log('Connect Wallet button clicked');
     try {
@@ -71,6 +80,8 @@ const connectWalletHandler = async () => {
             console.log('web3 initialized with PulseChain RPC URL');
         }
       
+        // Once the account is set, enable the swap button
+        enableSwapButton();
     } catch (error) {
         console.error("Error connecting to MetaMask", error);
     }
