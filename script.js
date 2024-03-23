@@ -31,6 +31,8 @@ const JOIN_GEM_CONTRACT_ADDRESSES = {
   GUSD: '0x79A0FA989fb7ADf1F8e80C93ee605Ebb94F7c6A5',
 };
 
+const usdcContractAddress = CONTRACT_ADDRESSES.USDC;
+
 const handleDisconnect = () => {
     console.log('MetaMask disconnected');
 };
@@ -127,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const handleUSDCApprove = async (amount) => {
-    const usdcContract = new web3.eth.Contract(usdcContractABI, usdcContractAddress);
+    const usdcContract = new web3.eth.Contract(usdcABI, usdcContractAddress);
     const amountInUSDCDecimals = `${amount * Math.pow(10, 6)}`;
     try {
         await usdcContract.methods.approve(psmContractAddress, amountInUSDCDecimals).send({ from: account });
