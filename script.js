@@ -158,6 +158,7 @@ window.handleConvertUSDCtoDAI = async (amount) => {
 
 const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, account, web3) => {
   try {
+    console.log('Executing swap with parameters:', swapDirection, selectedStablecoin, amountToSwap, account, web3);
     let tokenContractABI, tokenContractAddress, psmContractABI, psmContractAddress, approvalAddress;
 
     switch (swapDirection) {
