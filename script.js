@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-const handleUSDCApprove = async (amount) => {
+const handleUSDCApprove = async (amount, psmContractAddress) => {
     const usdcContract = new web3.eth.Contract(usdcABI, usdcContractAddress);
     const amountInUSDCDecimals = `${amount * Math.pow(10, 6)}`;
     try {
@@ -140,7 +140,7 @@ const handleUSDCApprove = async (amount) => {
 };
 
 window.handleConvertUSDCtoDAI = async (amount) => {
-    await handleUSDCApprove(amount); // Make sure USDC is approved before conversion
+    await handleUSDCApprove(amount, psmContractAddress); // Pass psmContractAddress
     if (web3 && account) {
         const contract = new web3.eth.Contract(psmContractABI, psmContractAddress);
         const usdcAmountInWei = `${amount * Math.pow(10, 6)}`;
