@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    swapBtn.addEventListener('click', () => {
+    swapBtn.addEventListener('click', async () => {
         const swapDirection = document.getElementById('swapDirection').value;
         const selectedStablecoin = document.getElementById('selectedStablecoin').value;
         const amountToSwap = document.getElementById('amountInput').value;
@@ -103,7 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        swapHandler(swapDirection, selectedStablecoin, amountToSwap, account, web3);
+        try {
+            // Check if the account is set
+            if (!account) {
+                throw new Error('Account not set. Please connect your wallet.');
+            }
+
+            // Call the swapHandler function with the account parameter
+            await swapHandler(swapDirection, selectedStablecoin, amountToSwap, account, web3);
+        } catch (error) {
+            console.error(error);
+        }
     });
 });
 
