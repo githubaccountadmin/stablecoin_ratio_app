@@ -204,5 +204,4 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
   } catch (error) {
     console.error('Error executing swap:', error);
   }
-};
 });
