@@ -91,41 +91,39 @@ window.ethereum.on('disconnect', handleDisconnect);
 
 document.addEventListener('DOMContentLoaded', function () {
     const connectWalletBtn = document.getElementById('connectWalletBtn');
+    const swapBtn = document.getElementById('swapBtn');
+
     if (connectWalletBtn) {
         connectWalletBtn.addEventListener('click', connectWalletHandler);
     } else {
         console.error('Connect Wallet button not found.');
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-    const swapBtn = document.getElementById('swapBtn');
-    if (!swapBtn) {
-        console.error('Swap button not found.');
-        return;
-    }
-
-    swapBtn.addEventListener('click', async () => {
-        const swapDirection = document.getElementById('swapDirection').value;
-        const selectedStablecoin = document.getElementById('selectedStablecoin').value;
-        const amountToSwap = document.getElementById('amountInput').value;
-        if (!amountToSwap) {
-            console.error('Please enter the amount to swap.');
-            return;
-        }
-
-        try {
-            // Check if the account is set
-            if (!account) {
-                throw new Error('Account not set. Please connect your wallet.');
+    if (swapBtn) {
+        swapBtn.addEventListener('click', async () => {
+            const swapDirection = document.getElementById('swapDirection').value;
+            const selectedStablecoin = document.getElementById('selectedStablecoin').value;
+            const amountToSwap = document.getElementById('amountInput').value;
+            if (!amountToSwap) {
+                console.error('Please enter the amount to swap.');
+                return;
             }
 
-            // Call the swapHandler function with the account parameter
-            await swapHandler(swapDirection, selectedStablecoin, amountToSwap, account, web3);
-        } catch (error) {
-            console.error(error);
-        }
-    });
+            try {
+                // Check if the account is set
+                if (!account) {
+                    throw new Error('Account not set. Please connect your wallet.');
+                }
+
+                // Call the swapHandler function with the account parameter
+                await swapHandler(swapDirection, selectedStablecoin, amountToSwap, account, web3);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    } else {
+        console.error('Swap button not found.');
+    }
 });
 
 const handleUSDCApprove = async (amount) => {
