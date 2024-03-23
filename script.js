@@ -106,32 +106,26 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.error('Connect Wallet button not found.');
     }
+});
 
-    // Only define the event listener for the "Swap" button if it's not already defined
+document.addEventListener('DOMContentLoaded', () => {
     const swapBtn = document.getElementById('swapBtn');
     if (!swapBtn) {
         console.error('Swap button not found.');
+        return;
     }
-});
 
-// Define the handleAmountChange function
-const handleAmountChange = (event) => {
-  // Retrieve the selected amount from the input field
-  const amount = event.target.value;
-  // Perform any necessary actions with the selected amount
-  console.log('Selected amount:', amount);
-};
+    swapBtn.addEventListener('click', () => {
+        const swapDirection = document.getElementById('swapDirection').value;
+        const selectedStablecoin = document.getElementById('selectedStablecoin').value;
+        const amountToSwap = document.getElementById('amountInput').value;
+        if (!amountToSwap) {
+            console.error('Please enter the amount to swap.');
+            return;
+        }
 
-// Error handling for event listeners
-document.addEventListener('DOMContentLoaded', function () {
-  // Find the amount input field by its ID
-  const amountInput = document.getElementById('amountInput');
-  if (amountInput) {
-    // Add an event listener for the 'change' event
-    amountInput.addEventListener('change', handleAmountChange);
-  } else {
-    console.error('Amount input field not found.');
-  }
+        swapHandler(swapDirection, selectedStablecoin, amountToSwap, account, web3);
+    });
 });
 
 const handleUSDCApprove = async (amount) => {
