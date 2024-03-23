@@ -172,5 +172,6 @@ const swapHandler = async (swapDirection, selectedStablecoin, amountToSwap, acco
     console.log(`Swap completed: ${amountToSwap} ${swapDirection === 'sell' ? selectedStablecoin : 'DAI'} to ${swapDirection === 'sell' ? 'DAI' : selectedStablecoin}.`);
   } catch (error) {
     console.error('Error executing swap:', error);
-  }
+  };
+  
 });
